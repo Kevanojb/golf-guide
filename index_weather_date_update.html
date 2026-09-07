@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Den Society — Plan My Round & Live Caddie</title>
+<style>
+:root{
+  --bg:#f7f7f2;
+  --paper:#ffffff;
+  --ink:#142019;
+  --muted:#68766e;
+  --line:#dfe5df;
+  --green:#136b4b;
+  --green2:#1f8a61;
+  --greenSoft:#eaf5ef;
+  --gold:#c99a2f;
+  --goldSoft:#fbf3df;
+  --blue:#2f6f9f;
+  --blueSoft:#eef5fb;
+  --red:#a94b42;
+  --redSoft:#fbefed;
+  --shadow:0 12px 36px rgba(33,49,40,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+button{font:inherit;color:inherit}
+main{max-width:1040px;margin:auto;padding:18px 14px 70px}
+.hero{
+  background:linear-gradient(135deg,#fff 0%,#f8fbf8 68%,#edf7f1 100%);
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:34px 26px;
+  box-shadow:var(--shadow);
+}
+.kicker{
+  color:var(--green);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+h1{
+  margin:10px 0 14px;
+  font-size:clamp(40px,7vw,72px);
+  line-height:.98;
+  letter-spacing:-.055em;
+  max-width:760px;
+}
+h2{
+  margin:4px 0 8px;
+  font-size:clamp(26px,4.8vw,38px);
+  line-height:1.04;
+  letter-spacing:-.035em;
+}
+h3{margin:0 0 6px}
+p{line-height:1.55}
+.lede{font-size:clamp(17px,2.4vw,21px);max-width:760px;color:var(--muted)}
+.flow{
+  display:flex;align-items:center;gap:8px;overflow-x:auto;margin-top:20px;padding-bottom:4px
+}
+.flow span{white-space:nowrap;font-weight:900}
+.flow .arrow{color:var(--green);font-size:18px}
+.section{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:24px;
+  margin-top:16px;
+  box-shadow:0 8px 26px rgba(33,49,40,.045);
+}
+.grid2,.grid3,.grid4{display:grid;gap:12px}
+.grid2{grid-template-columns:repeat(2,1fr)}
+.grid3{grid-template-columns:repeat(3,1fr)}
+.grid4{grid-template-columns:repeat(4,1fr)}
+.card{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+}
+.soft{
+  background:#f6f8f6;
+  border-radius:18px;
+  padding:16px;
+}
+.accent{
+  background:var(--greenSoft);
+  border:1px solid #cfe5d8;
+  border-radius:18px;
+  padding:16px;
+}
+.btn{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:14px;
+  padding:12px 14px;
+  min-height:48px;
+  font-weight:850;
+  cursor:pointer;
+  transition:.18s ease;
+}
+.btn:hover,.btn.active{
+  border-color:#8fbea6;
+  background:var(--greenSoft);
+  transform:translateY(-1px);
+}
+.primary{
+  background:var(--green);
+  border-color:var(--green);
+  color:#fff;
+  width:100%;
+}
+.primary:hover{background:#0f5b40}
+.big{
+  font-size:30px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-.035em;
+}
+.small{font-size:13px}
+.muted{color:var(--muted)}
+.pillrow{display:flex;flex-wrap:wrap;gap:8px}
+.pill{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:12px;
+  font-weight:850;
+}
+.heroChoices{margin-top:26px}
+.heroChoice{
+  min-height:165px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.heroChoice .icon{font-size:30px}
+.heroChoice b{font-size:22px}
+.route{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.route button{text-align:left;min-height:132px}
+.route .role{font-size:12px;font-weight:900;color:var(--green)}
+.route .pts{font-size:28px;font-weight:950;margin:6px 0}
+.drawer{display:none;margin-top:12px}
+.drawer.open{display:block}
+.evidence{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.evidence div{background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px;font-size:13px}
+.callout{
+  margin-top:10px;
+  border-left:4px solid var(--gold);
+  background:var(--goldSoft);
+  border-radius:12px;
+  padding:12px 13px;
+}
+.weatherWrap{display:grid;grid-template-columns:1fr 1.3fr;gap:12px}
+.weatherPanel{
+  background:linear-gradient(135deg,#f7fbff,#eef5fb);
+  border:1px solid #d5e4ef;
+  border-radius:20px;
+  padding:18px;
+}
+.metric3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.metric{
+  background:#fff;border:1px solid #dbe6ee;border-radius:14px;padding:12px
+}
+.metric .label{font-size:11px;color:var(--muted);font-weight:900}
+.metric .value{font-size:28px;font-weight:950}
+.clubgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.clubcard{text-align:center}
+.stepper{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:8px}
+.step{
+  width:46px;height:46px;border:1px solid var(--line);border-radius:13px;
+  background:#fff;font-size:24px;font-weight:900;cursor:pointer
+}
+.clubval{font-size:30px;font-weight:950;min-width:58px}
+.bar{height:10px;background:#e6ece8;border-radius:999px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,var(--green),#56b88d);transition:width .25s}
+.reportIntro{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px
+}
+.reportBtn{
+  text-align:left;
+  min-height:125px;
+}
+.reportBtn b{display:block;font-size:18px;margin-bottom:4px}
+.reportPanel{display:none;margin-top:12px}
+.reportPanel.open{display:block}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stat{background:#f7f9f7;border-radius:13px;padding:12px}
+.stat b{font-size:20px}
+.chart{height:110px;display:flex;align-items:flex-end;gap:7px;margin-top:14px}
+.chart i{display:block;flex:1;background:linear-gradient(#51a77e,var(--green));border-radius:7px 7px 3px 3px}
+.good{color:var(--green)}.warn{color:#9a6b16}
+.simpleLine{
+  display:flex;gap:10px;align-items:center;border-top:1px solid var(--line);padding:12px 0
+}
+.simpleLine:first-child{border-top:0;padding-top:0}
+.simpleIcon{font-size:24px;min-width:30px}
+.footer{text-align:center;padding:28px 14px 10px}
+.hidden{display:none!important}
+.note{
+  font-size:12px;color:var(--muted);margin-top:10px
+}
+@media(max-width:760px){
+  .grid4,.route{grid-template-columns:repeat(2,1fr)}
+  .grid3,.clubgrid,.reportIntro{grid-template-columns:1fr}
+  .weatherWrap{grid-template-columns:1fr}
+  .statgrid{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:28px 20px}
+  .section{padding:20px}
+}
+
+.appLaunch{
+  margin-top:16px;
+  background:linear-gradient(135deg,#136b4b,#1f8a61);
+  color:#fff;
+  border-radius:22px;
+  padding:20px;
+}
+.appLaunch .kicker{color:#dff5e9}
+.appLaunch p{color:#eef9f3}
+.appLaunch .launchBtn{
+  display:inline-flex;align-items:center;justify-content:center;
+  text-decoration:none;background:#fff;color:#136b4b;
+  border-radius:14px;padding:13px 18px;min-height:50px;
+  font-weight:950;margin-top:4px
+}
+.homeSteps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+.phoneGuide{border:1px solid var(--line);border-radius:20px;padding:18px;background:#fff}
+.stepRow{display:flex;gap:12px;align-items:flex-start;margin-top:13px}
+.stepNo{
+  flex:0 0 32px;width:32px;height:32px;border-radius:50%;
+  background:var(--greenSoft);color:var(--green);display:flex;
+  align-items:center;justify-content:center;font-weight:950
+}
+.stepText b{display:block;margin-bottom:2px}
+@media(max-width:760px){.homeSteps{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<main>
+
+<section class="hero">
+  <div class="kicker">DEN SOCIETY · SMARTER GOLF</div>
+  <h1>Have a plan before you reach the first tee.</h1>
+  <p class="lede">Plan My Round helps you decide what score you should target and where those points are most realistically going to come from. Live Caddie then helps you stay on that route when the round, weather and golf course change.</p>
+
+  <div class="flow" aria-label="Plan play adapt learn">
+    <span>PLAN</span><span class="arrow">→</span>
+    <span>PLAY</span><span class="arrow">→</span>
+    <span>ADAPT</span><span class="arrow">→</span>
+    <span>LEARN</span>
+  </div>
+
+  <div class="grid2 heroChoices">
+    <div class="card heroChoice">
+      <div><div class="icon">🗓️</div><div class="kicker">Before you play</div><b>Plan My Round</b></div>
+      <p class="muted">Build and save your strategy before competition day.</p>
+    </div>
+    <div class="card heroChoice">
+      <div><div class="icon">🏌️</div><div class="kicker">On the course</div><b>Live Caddie</b></div>
+      <p class="muted">Follow the plan — or start fresh — and adapt as things change.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="kicker">Ready to play?</div>
+  <h2>Open Den Society Golf.</h2>
+  <p class="muted">When you've seen how Plan My Round and Live Caddie work, go straight into the Den Society app.</p>
+  <div class="appLaunch">
+    <div class="kicker">DEN SOCIETY APP</div>
+    <h3 style="font-size:25px;margin-top:5px">Plan your round. Use Live Caddie. Review your golf.</h3>
+    <p class="small">Open the live Den Society website on your phone or computer.</p>
+    <a class="launchBtn" href="https://kevanojb.github.io/golf/den-society">🏌️ OPEN DEN SOCIETY APP →</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="kicker">Keep it on your phone</div>
+  <h2>Make Den Society feel like an app.</h2>
+  <p class="muted">You don't need to visit GitHub each time. Add the Den Society website to your Home Screen and open it like any other app.</p>
+
+  <div class="homeSteps">
+    <div class="phoneGuide">
+      <h3>🍎 iPhone / iPad</h3>
+      <div class="stepRow"><div class="stepNo">1</div><div class="stepText"><b>Open Den Society in Safari</b><span class="small muted">Use the green button above.</span></div></div>
+      <div class="stepRow"><div class="stepNo">2</div><div class="stepText"><b>Tap the Share button</b><span class="small muted">The square with the upward arrow.</span></div></div>
+      <div class="stepRow"><div class="stepNo">3</div><div class="stepText"><b>Choose “Add to Home Screen”</b><span class="small muted">You may need to scroll down the Share menu.</span></div></div>
+      <div class="stepRow"><div class="stepNo">4</div><div class="stepText"><b>Tap Add</b><span class="small muted">Den Society will now appear on your Home Screen.</span></div></div>
+    </div>
+
+    <div class="phoneGuide">
+      <h3>🤖 Android</h3>
+      <div class="stepRow"><div class="stepNo">1</div><div class="stepText"><b>Open Den Society in Chrome</b><span class="small muted">Use the green button above.</span></div></div>
+      <div class="stepRow"><div class="stepNo">2</div><div class="stepText"><b>Open the Chrome menu</b><span class="small muted">Tap the three-dot menu.</span></div></div>
+      <div class="stepRow"><div class="stepNo">3</div><div class="stepText"><b>Choose “Add to Home screen”</b><span class="small muted">On some phones this may say “Install app”.</span></div></div>
+      <div class="stepRow"><div class="stepNo">4</div><div class="stepText"><b>Confirm Add / Install</b><span class="small muted">The Den Society icon will then be available from your Home Screen.</span></div></div>
+    </div>
+  </div>
+
+  <div class="callout"><b>Tip:</b> Add the actual Den Society app page to your Home Screen — not this guide — so one tap takes you straight into your golf.</div>
+</section>
+
+<section class="section">
+  <div class="kicker">1 · Before the game</div>
+  <h2>Choose what success looks like today.</h2>
+  <p class="muted">You can choose your own target, or let Plan My Round suggest a realistic competitive target using the information available.</p>
+
+  <div class="grid4">
+    <button class="btn target active" data-target="recommend">✨ Recommend</button>
+    <button class="btn target" data-target="stableford">🏆 Stableford</button>
+    <button class="btn target" data-target="net">🎯 Net</button>
+    <button class="btn target" data-target="gross">⛳ Gross</button>
+  </div>
+
+  <div id="targetBox" class="accent" style="margin-top:12px">
+    <div class="kicker">Recommended competitive target</div>
+    <div class="big">40 POINTS</div>
+    <p class="small">Example: if 39 points won the last event at this course, 40 may be a sensible target — adjusted where possible for course difficulty, your game and the expected conditions.</p>
+  </div>
+
+  <div class="grid3" style="margin-top:12px">
+    <div class="soft"><b>Previous results</b><p class="small muted">What has tended to win or place well here?</p></div>
+    <div class="soft"><b>Your game</b><p class="small muted">Handicap, form and known scoring patterns.</p></div>
+    <div class="soft"><b>Forecast</b><p class="small muted">Weather for today, a future date or a previous date can help put the target and round into context.</p></div>
+  </div>
+
+  <button id="savePlan" class="btn primary" style="margin-top:12px">💾 SAVE PLAN FOR GAME DAY</button>
+  <div id="saveMsg" class="accent hidden" style="margin-top:10px"><b>✓ Plan saved.</b> Live Caddie can load it on the day.</div>
+</section>
+
+<section class="section">
+  <div class="kicker">2 · Build the route</div>
+  <h2>Not every hole should be played the same way.</h2>
+  <p class="muted">Tap a hole to see why the plan is recommending that approach.</p>
+
+  <div class="route">
+    <button class="btn routeBtn" data-hole="h5"><div class="role">H5 · 🟢 ATTACK</div><div class="pts">3 pts</div><div class="small muted">A genuine scoring opportunity</div></button>
+    <button class="btn routeBtn" data-hole="h6"><div class="role">H6 · ⚪ STEADY</div><div class="pts">2 pts</div><div class="small muted">Don't give shots away</div></button>
+    <button class="btn routeBtn" data-hole="h7"><div class="role">H7 · 🛡️ PROTECT</div><div class="pts">2 pts</div><div class="small muted">Bogey is on plan</div></button>
+    <button class="btn routeBtn" data-hole="h8"><div class="role">H8 · 🔥 CHANCE</div><div class="pts">3 pts</div><div class="small muted">A realistic place to gain</div></button>
+  </div>
+
+  <div id="routeDetail" class="drawer"></div>
+
+  <div class="callout"><b>The aim is not to beat the plan on every hole.</b> The aim is to beat it after 18.</div>
+</section>
+
+<section class="section">
+  <div class="kicker">3 · Game day</div>
+  <h2>Live Caddie picks up where the plan leaves off.</h2>
+  <div class="grid2">
+    <div class="accent">
+      <div class="kicker">Saved plan found</div>
+      <div class="big">40 pts</div>
+      <p class="small muted">Your target and hole-by-hole route are ready.</p>
+      <button id="useSaved" class="btn primary">▶ USE MY SAVED PLAN</button>
+    </div>
+    <div class="soft">
+      <div class="kicker">No preparation?</div>
+      <h3>Start on the first tee.</h3>
+      <p class="small muted">Choose the course, tee, handicap and target and use Live Caddie without ever creating a Plan My Round.</p>
+      <button id="startNow" class="btn">⚡ START LIVE CADDIE NOW</button>
+    </div>
+  </div>
+  <div id="liveMsg" class="accent hidden" style="margin-top:10px"></div>
+</section>
+
+<section class="section">
+  <div class="kicker">4 · The wow moment</div>
+  <h2>Live weather that understands the golf hole.</h2>
+  <p class="muted">Where hole geometry is available, the app knows the direction the hole is playing. Choose today, a future date or a previous date and it can combine the weather for that day with the hole direction, interpreting the same wind differently from hole to hole.</p>
+
+  <div class="accent" style="margin-bottom:12px">
+  <b>📅 Pick the day you want to understand.</b>
+  <p class="small muted" style="margin-bottom:0">Use <b>today’s weather</b>, select a <b>future date</b> to plan ahead, or select a <b>past date</b> to review the conditions from a previous round, where weather data is available.</p>
+</div>
+
+<div class="weatherWrap">
+    <div class="weatherPanel">
+      <b>🌬️ SAME WIND ALL THREE HOLES</b>
+      <div class="big" style="font-size:25px;margin-top:6px">18 mph · NW</div>
+      <p class="small muted">Tap H6, H7 and H8. The wind stays the same. The hole direction changes.</p>
+      <div class="grid3">
+        <button class="btn windHole active" data-wh="6">H6</button>
+        <button class="btn windHole" data-wh="7">H7</button>
+        <button class="btn windHole" data-wh="8">H8</button>
+      </div>
+    </div>
+
+    <div class="weatherPanel">
+      <div class="grid2">
+        <div><div class="small muted">HOLE DIRECTION</div><b id="orientation">SE</b></div>
+        <div><div class="small muted">WIND EFFECT</div><b id="windEffect">💨 HELPING</b></div>
+      </div>
+
+      <div class="metric3">
+        <div class="metric"><div class="label">GPS</div><div class="value">158</div><div class="small">yd</div></div>
+        <div class="metric"><div class="label">PLAYS LIKE</div><div id="plays" class="value">148</div><div class="small">yd</div></div>
+        <div class="metric"><div class="label">CLUB</div><div id="windClub" class="value">8i</div></div>
+      </div>
+
+      <p id="windReason" class="small"><b>Why?</b> This hole is playing largely with the wind for the selected date, so the effective distance is reduced.</p>
+    </div>
+  </div>
+
+  <div class="soft" style="margin-top:12px">
+    <div class="simpleLine"><div class="simpleIcon">🗓️</div><div><b>Choose any date</b><div class="small muted">Use today’s weather, look ahead to a future round, or look back at conditions from a previous day where weather data is available.</div></div></div>
+    <div class="simpleLine"><div class="simpleIcon">🌦️</div><div><b>On game day</b><div class="small muted">Live Caddie can use the latest available conditions and adjust the advice as the weather changes.</div></div></div>
+  </div>
+
+  <div class="callout"><b>GPS and weather are aids, not guarantees.</b> Phone GPS, weather observations, lie, elevation, strike and local conditions all matter. Players should also follow competition and Local Rules.</div>
+</section>
+
+<section class="section">
+  <div class="kicker">5 · Your clubs</div>
+  <h2>Make every recommendation personal.</h2>
+  <p class="muted">Set your normal carry distances with the + and − buttons. Then change the shot and conditions.</p>
+
+  <div class="clubgrid">
+    <div class="card clubcard"><b>7 IRON</b><div class="stepper"><button class="step minus" data-c="c7">−</button><div><div id="c7" class="clubval">158</div><div class="small muted">YARDS</div></div><button class="step plus" data-c="c7">+</button></div></div>
+    <div class="card clubcard"><b>6 IRON</b><div class="stepper"><button class="step minus" data-c="c6">−</button><div><div id="c6" class="clubval">170</div><div class="small muted">YARDS</div></div><button class="step plus" data-c="c6">+</button></div></div>
+    <div class="card clubcard"><b>5 IRON</b><div class="stepper"><button class="step minus" data-c="c5">−</button><div><div id="c5" class="clubval">182</div><div class="small muted">YARDS</div></div><button class="step plus" data-c="c5">+</button></div></div>
+  </div>
+
+  <h3 style="margin-top:16px">Shot distance</h3>
+  <div class="pillrow">
+    <button class="btn shot" data-y="150">150 yd</button>
+    <button class="btn shot active" data-y="158">158 yd</button>
+    <button class="btn shot" data-y="168">168 yd</button>
+    <button class="btn shot" data-y="178">178 yd</button>
+  </div>
+
+  <h3 style="margin-top:16px">Conditions</h3>
+  <div class="grid4">
+    <button class="btn condition active" data-f="1" data-name="calm conditions">☀️ Calm</button>
+    <button class="btn condition" data-f="1.10" data-name="an 18 mph headwind">🌬️ Into</button>
+    <button class="btn condition" data-f=".93" data-name="a 15 mph helping wind">💨 Helping</button>
+    <button class="btn condition" data-f="1.05" data-name="cold and wet conditions">🌧️ Cold + wet</button>
+  </div>
+
+  <div id="clubResult" class="accent" style="margin-top:12px"></div>
+  <div class="note">No stored club distances? Live Caddie can still show the GPS and estimated plays-like distance and suggest more or less club without pretending to know the exact club.</div>
+</section>
+
+<section class="section">
+  <div class="kicker">6 · As the round changes</div>
+  <h2>The plan should adapt — not disappear.</h2>
+  <p class="muted">Tap the scenarios to see how the caddie's advice changes when you move ahead or behind the route.</p>
+
+  <div class="grid3">
+    <button class="btn state" data-state="ahead">🟢 2 AHEAD<br><span class="small">after 12</span></button>
+    <button class="btn state active" data-state="route">⚪ ON ROUTE<br><span class="small">after 12</span></button>
+    <button class="btn state" data-state="behind">🟠 2 BEHIND<br><span class="small">after 12</span></button>
+  </div>
+
+  <div class="soft" style="margin-top:12px">
+    <div class="grid2">
+      <b id="probText">Target likelihood · 58%</b>
+      <b id="routeStatus" style="text-align:right">ON ROUTE</b>
+    </div>
+    <div class="bar" style="margin-top:8px"><div id="probBar" class="fill" style="width:58%"></div></div>
+    <p id="strategy"><b>Caddie's call:</b> Stay with the plan. Don't manufacture a gain on the next difficult hole.</p>
+    <div id="probEvidence" class="card small"><b>Why?</b> Your score matches the route, six holes remain and planned scoring opportunities are still ahead.</div>
+  </div>
+
+  <div class="note">The percentages shown here are specimen values to demonstrate the experience. The live app should only present a factual probability when it is calculated from a defined evidence-based model using actual available data.</div>
+</section>
+
+<section class="section">
+  <div class="kicker">7 · Optional shot tracking</div>
+  <h2>Record only enough to learn.</h2>
+  <p class="muted">Choose During, After or Off. Normal shots can simply be the club. Mark only the shots worth learning from.</p>
+
+  <div class="pillrow">
+    <span class="pill">Driver ⚠ Pull</span>
+    <span class="pill">7 Iron</span>
+    <span class="pill">56° ⚠ Short</span>
+    <span class="pill">Putter</span>
+    <span class="pill">Putter</span>
+  </div>
+
+  <div class="grid3" style="margin-top:12px">
+    <div class="soft"><b>Driver</b><p class="small muted">Repeated left miss is emerging.</p></div>
+    <div class="soft"><b>56°</b><p class="small muted">Short is the common miss.</p></div>
+    <div class="soft"><b>Putter</b><p class="small muted">Stable — don't over-practise it.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="kicker">8 · After the round</div>
+  <h2>Turn the round into something useful.</h2>
+  <p class="muted">Tap each feature to see what you can get from it.</p>
+
+  <div class="reportIntro">
+    <button class="btn reportBtn" data-report="view"><b>📈 View My Golf</b><span class="small muted">What is happening to my golf over time?</span></button>
+    <button class="btn reportBtn" data-report="analysis"><b>📊 Detailed Game Analysis</b><span class="small muted">Why is it happening and what should I work on?</span></button>
+    <button class="btn reportBtn" data-report="games"><b>🗂 Explore Games</b><span class="small muted">What happened in that competition?</span></button>
+  </div>
+
+  <div id="report-view" class="reportPanel">
+    <div class="accent">
+      <h3>📈 View My Golf</h3>
+      <p class="muted">A quick, always-available view of form, trends and the patterns that matter most.</p>
+      <div class="statgrid">
+        <div class="stat"><span class="small muted">LAST 6 AVG</span><br><b>35.8</b> pts</div>
+        <div class="stat"><span class="small muted">BEST</span><br><b>41</b> pts</div>
+        <div class="stat"><span class="small muted">TREND</span><br><b class="good">↗ Improving</b></div>
+        <div class="stat"><span class="small muted">TARGET HIT</span><br><b>3/6</b></div>
+      </div>
+      <div class="chart"><i style="height:48%"></i><i style="height:62%"></i><i style="height:57%"></i><i style="height:76%"></i><i style="height:69%"></i><i style="height:92%"></i></div>
+      <div class="grid2" style="margin-top:12px">
+        <div class="card"><b class="good">💪 Strength</b><p class="small">Par-3 scoring is improving and putting remains stable.</p></div>
+        <div class="card"><b class="warn">⚠ Main leak</b><p class="small">The opening six holes are repeatedly below the planned route.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="report-analysis" class="reportPanel">
+    <div class="accent">
+      <h3>📊 Detailed Game Analysis</h3>
+      <div class="card"><b>EXECUTIVE SUMMARY</b><p class="small">Your scoring trend is improving, but the biggest opportunity is not extra distance. Early-round losses and wedge distance control are costing more.</p></div>
+      <div class="grid2" style="margin-top:10px">
+        <div class="card"><b class="good">✓ WHAT'S WORKING</b><p class="small">Par-3 scoring +0.6 pts/round. Putting stable. Driver distance is not currently limiting scoring.</p></div>
+        <div class="card"><b class="warn">⚠ WHAT COSTS SHOTS</b><p class="small">Opening six average 2.1 points below route. Driver-left pattern recurs. 50–80 yard approaches frequently finish short.</p></div>
+        <div class="card"><b>🏌️ PRACTISE NEXT</b><p class="small">1. Driver start-line control.<br>2. 56° carry calibration at 55/65/75 yd.<br>3. Rehearse the first-six-hole strategy.</p></div>
+        <div class="card"><b>🛑 DON'T OVER-PRACTISE</b><p class="small">Long putting and mid-irons are performing well enough relative to the higher-value weaknesses.</p></div>
+      </div>
+      <div class="callout"><b>Practice conclusion:</b> Improving early-round strategy and wedge carry control is currently more likely to lower scores than chasing more driver speed.</div>
+      <div class="note">Specimen report. The real report should use the golfer's selected rounds and whatever tracking evidence is actually available.</div>
+    </div>
+  </div>
+
+  <div id="report-games" class="reportPanel">
+    <div class="accent">
+      <h3>🗂 Explore Games</h3>
+      <p class="muted">Review previous Society events and learn what matters before returning to a course.</p>
+      <div class="grid2">
+        <div class="card"><b>⛳ Chart Hills</b><div class="big" style="font-size:24px">38 · 34 · 40 pts</div><p class="small">Strongest: H5, H11, H16<br>Recurring problem: H7<br>Best round: 40 points</p></div>
+        <div class="card"><b>⛳ Cherry Lodge</b><div class="big" style="font-size:24px">35 · 37 pts</div><p class="small">Trend: improving<br>Largest losses: H1–4<br>Return focus: settle early</p></div>
+      </div>
+      <div class="soft" style="margin-top:10px"><b>Use it next time</b><p class="small">Review what cost you last time and carry that evidence into your next Plan My Round.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" style="text-align:center">
+  <div class="kicker">Ready?</div>
+  <h2>Now put it into practice.</h2>
+  <p class="muted">Open Den Society, prepare your next round or start Live Caddie on game day.</p>
+  <a class="btn primary" style="display:inline-flex;text-decoration:none;align-items:center;justify-content:center;max-width:420px" href="https://kevanojb.github.io/golf/den-society">🏌️ OPEN DEN SOCIETY APP →</a>
+</section>
+
+<section class="footer">
+  <div class="big">PLAN → PLAY → ADAPT → LEARN</div>
+  <p class="muted">The technology should make golf feel simpler — not more complicated.</p>
+</section>
+
+</main>
+
+<script>
+(function(){
+  const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+  const active=(nodes,el)=>{nodes.forEach(x=>x.classList.remove('active'));el.classList.add('active')};
+
+  const targets={
+    recommend:['Recommended competitive target','40 POINTS','Example: if 39 points won the last event at this course, 40 may be a sensible target — adjusted where possible for course difficulty, your game and the expected conditions.'],
+    stableford:['Your Stableford target','38 POINTS','Choose the total that represents a successful round for you. Plan My Round builds the hole-by-hole route around it.'],
+    net:['Your net target','NET 70','Set the net score you want to achieve and identify where to protect shots and where gains are realistic.'],
+    gross:['Your gross target','GROSS 79','Set a personal gross target and build a route around realistic pars, bogeys and opportunities.']
+  };
+  $$('.target').forEach(b=>b.onclick=()=>{active($$('.target'),b);const x=targets[b.dataset.target];$('#targetBox').innerHTML='<div class="kicker">'+x[0]+'</div><div class="big">'+x[1]+'</div><p class="small">'+x[2]+'</p>'});
+  $('#savePlan').onclick=()=>$('#saveMsg').classList.remove('hidden');
+  $('#useSaved').onclick=()=>{const x=$('#liveMsg');x.innerHTML='<b>✓ Saved plan loaded.</b> Live Caddie starts with your target and route, then adapts as the round and conditions change.';x.classList.remove('hidden')};
+  $('#startNow').onclick=()=>{const x=$('#liveMsg');x.innerHTML='<b>⚡ Live Caddie started without a saved plan.</b> Choose today’s course, tee, handicap and target and play.';x.classList.remove('hidden')};
+
+  const route={
+    h5:['H5 · 🟢 ATTACK','3 points · A genuine scoring opportunity','This is one of the better places to look for a gain.','📊 Previous scoring','You average 2.6 pts here / on comparable holes.','🏌️ Shot pattern','Your normal tee shot leaves a comfortable approach.','🌬️ Conditions','The selected day’s wind is helping.','⚠️ Main danger','Trouble left — avoid it rather than chasing the flag.','Caddie’s plan','Play positively. Three points is realistic, but two is still perfectly acceptable.'],
+    h6:['H6 · ⚪ STEADY','2 points · Don’t give shots away','You do not need to manufacture a gain here.','📊 Historical average','About 1.9 pts.','🌬️ Conditions','Crosswind makes the approach less predictable.','🎯 Green pattern','Green success is lower than your normal level.','🏆 Route requirement','Par gives the two points required.','Caddie’s plan','Aim for the safe part of the green. Don’t turn a good two-point hole into one or zero chasing a difficult pin.'],
+    h7:['H7 · 🛡️ PROTECT','2 points · Bogey is on plan','One of today’s hardest holes — but your handicap shot changes what success means.','🔢 Handicap','Stroke Index 3 — you receive a shot.','📏 Difficulty','Long relative to your normal distances.','🌬️ Conditions','Playing into the selected day’s wind.','📊 History','Historically one of your weaker holes.','Caddie’s plan','Keep the ball in play. Bogey earns two Stableford points. A bogey here is not a failure — it is the score the route asked for.'],
+    h8:['H8 · 🔥 CHANCE','3 points · A realistic place to gain','A better recovery opportunity than forcing unnecessary risk on H7.','🔢 Handicap','You receive a handicap shot.','📊 Previous scoring','Around 2.4 pts average.','💨 Conditions','The course changes direction and the selected day’s wind is now helping.','🏌️ Approach','Effective yardage brings a comfortable club into play.','Caddie’s plan','Be positive. If you are behind route, this is a more sensible place to recover a point than the previous protect hole.']
+  };
+  $$('.routeBtn').forEach(b=>b.onclick=()=>{active($$('.routeBtn'),b);const x=route[b.dataset.hole],d=$('#routeDetail');d.innerHTML='<div class="accent"><h3>'+x[0]+'</h3><b>'+x[1]+'</b><p class="small muted">'+x[2]+'</p><div class="evidence"><div><b>'+x[3]+'</b><br>'+x[4]+'</div><div><b>'+x[5]+'</b><br>'+x[6]+'</div><div><b>'+x[7]+'</b><br>'+x[8]+'</div><div><b>'+x[9]+'</b><br>'+x[10]+'</div></div><div class="callout"><b>'+x[11]+':</b> '+x[12]+'</div></div>';d.classList.add('open')});
+
+  const wh={
+    6:['SE','💨 HELPING',148,'8i','This hole is playing largely with the wind for the selected date, so the effective distance is reduced.'],
+    7:['NW','🌬️ INTO',174,'6i','The course has turned back into the same wind. The headwind component makes the shot play longer.'],
+    8:['NE','↔️ CROSSWIND',160,'7i','The same wind is now mainly across the hole. Its distance effect is smaller, but lateral movement matters more.']
+  };
+  $$('.windHole').forEach(b=>b.onclick=()=>{active($$('.windHole'),b);const x=wh[b.dataset.wh];$('#orientation').textContent=x[0];$('#windEffect').textContent=x[1];$('#plays').textContent=x[2];$('#windClub').textContent=x[3];$('#windReason').innerHTML='<b>Why?</b> '+x[4]});
+
+  const carries={c7:158,c6:170,c5:182};let shot=158,factor=1,condition='calm conditions';
+  function updateClub(){
+    const plays=Math.round(shot*factor);
+    const clubs=[['7 iron','7i',carries.c7],['6 iron','6i',carries.c6],['5 iron','5i',carries.c5]];
+    clubs.sort((a,b)=>Math.abs(a[2]-plays)-Math.abs(b[2]-plays));
+    const c=clubs[0];
+    const extra=factor>1?'The conditions mean taking more club than the raw GPS yardage suggests.':factor<1?'The helping conditions mean less club may be enough.':'The shot is playing close to the measured distance.';
+    $('#clubResult').innerHTML='<div class="kicker">Live Caddie suggestion</div><div class="big">'+shot+' yd → plays '+plays+' → '+c[1]+'</div><p class="small"><b>Why?</b> In '+condition+', the '+shot+' yard shot is estimated to play about '+plays+' yards. Your '+c[0]+' carries '+c[2]+' yards, the closest stored match. '+extra+'</p>';
+  }
+  $$('.plus').forEach(b=>b.onclick=()=>{carries[b.dataset.c]=Math.min(250,carries[b.dataset.c]+1);$('#'+b.dataset.c).textContent=carries[b.dataset.c];updateClub()});
+  $$('.minus').forEach(b=>b.onclick=()=>{carries[b.dataset.c]=Math.max(50,carries[b.dataset.c]-1);$('#'+b.dataset.c).textContent=carries[b.dataset.c];updateClub()});
+  $$('.shot').forEach(b=>b.onclick=()=>{active($$('.shot'),b);shot=+b.dataset.y;updateClub()});
+  $$('.condition').forEach(b=>b.onclick=()=>{active($$('.condition'),b);factor=+b.dataset.f;condition=b.dataset.name;updateClub()});
+  updateClub();
+
+  const states={
+    ahead:[76,'AHEAD','Protect the advantage. Reduce unnecessary risk; make the difficult holes earn the points back from you.','You are two points ahead of route with six holes left and still have planned scoring opportunities remaining.'],
+    route:[58,'ON ROUTE','Stay with the plan. Don’t manufacture a gain on the next difficult hole.','Your score matches the route, six holes remain and planned scoring opportunities are still ahead.'],
+    behind:[34,'TARGET HARDER','The target is harder but still possible. Concentrate recovery on realistic opportunity holes rather than attacking everything.','You are two points behind route with six holes left. The best recovery chances are the remaining opportunity holes, not the protect holes.']
+  };
+  $$('.state').forEach(b=>b.onclick=()=>{active($$('.state'),b);const x=states[b.dataset.state];$('#probText').textContent='Target likelihood · '+x[0]+'%';$('#routeStatus').textContent=x[1];$('#probBar').style.width=x[0]+'%';$('#strategy').innerHTML='<b>Caddie’s call:</b> '+x[2];$('#probEvidence').innerHTML='<b>Why?</b> '+x[3]});
+
+  $$('.reportBtn').forEach(b=>b.onclick=()=>{
+    const id='report-'+b.dataset.report;
+    const panel=$('#'+id);
+    const wasOpen=panel.classList.contains('open');
+    $$('.reportPanel').forEach(p=>p.classList.remove('open'));
+    $$('.reportBtn').forEach(x=>x.classList.remove('active'));
+    if(!wasOpen){panel.classList.add('open');b.classList.add('active');panel.scrollIntoView({behavior:'smooth',block:'nearest'})}
+  });
+})();
+</script>
+</body>
+</html>
