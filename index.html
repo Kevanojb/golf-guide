@@ -329,7 +329,7 @@ p{line-height:1.55}
   <div class="grid3" style="margin-top:12px">
     <div class="soft"><b>Previous results</b><p class="small muted">What has tended to win or place well here?</p></div>
     <div class="soft"><b>Your game</b><p class="small muted">Handicap, form and known scoring patterns.</p></div>
-    <div class="soft"><b>Forecast</b><p class="small muted">Wind and conditions can change what counts as a strong score.</p></div>
+    <div class="soft"><b>Forecast</b><p class="small muted">Weather for today, a future date or a previous date can help put the target and round into context.</p></div>
   </div>
 
   <button id="savePlan" class="btn primary" style="margin-top:12px">💾 SAVE PLAN FOR GAME DAY</button>
@@ -376,9 +376,14 @@ p{line-height:1.55}
 <section class="section">
   <div class="kicker">4 · The wow moment</div>
   <h2>Live weather that understands the golf hole.</h2>
-  <p class="muted">Where hole geometry is available, Live Caddie knows the direction the hole is playing. That lets it interpret the same wind differently from hole to hole.</p>
+  <p class="muted">Where hole geometry is available, the app knows the direction the hole is playing. Choose today, a future date or a previous date and it can combine the weather for that day with the hole direction, interpreting the same wind differently from hole to hole.</p>
 
-  <div class="weatherWrap">
+  <div class="accent" style="margin-bottom:12px">
+  <b>📅 Pick the day you want to understand.</b>
+  <p class="small muted" style="margin-bottom:0">Use <b>today’s weather</b>, select a <b>future date</b> to plan ahead, or select a <b>past date</b> to review the conditions from a previous round, where weather data is available.</p>
+</div>
+
+<div class="weatherWrap">
     <div class="weatherPanel">
       <b>🌬️ SAME WIND ALL THREE HOLES</b>
       <div class="big" style="font-size:25px;margin-top:6px">18 mph · NW</div>
@@ -402,13 +407,13 @@ p{line-height:1.55}
         <div class="metric"><div class="label">CLUB</div><div id="windClub" class="value">8i</div></div>
       </div>
 
-      <p id="windReason" class="small"><b>Why?</b> This hole is playing largely with today's wind, so the effective distance is reduced.</p>
+      <p id="windReason" class="small"><b>Why?</b> This hole is playing largely with the wind for the selected date, so the effective distance is reduced.</p>
     </div>
   </div>
 
   <div class="soft" style="margin-top:12px">
-    <div class="simpleLine"><div class="simpleIcon">🗓️</div><div><b>Before the round</b><div class="small muted">Plan My Round uses the forecast available at planning time.</div></div></div>
-    <div class="simpleLine"><div class="simpleIcon">🌦️</div><div><b>During the round</b><div class="small muted">Live Caddie can use the latest available conditions and adjust the advice.</div></div></div>
+    <div class="simpleLine"><div class="simpleIcon">🗓️</div><div><b>Choose any date</b><div class="small muted">Use today’s weather, look ahead to a future round, or look back at conditions from a previous day where weather data is available.</div></div></div>
+    <div class="simpleLine"><div class="simpleIcon">🌦️</div><div><b>On game day</b><div class="small muted">Live Caddie can use the latest available conditions and adjust the advice as the weather changes.</div></div></div>
   </div>
 
   <div class="callout"><b>GPS and weather are aids, not guarantees.</b> Phone GPS, weather observations, lie, elevation, strike and local conditions all matter. Players should also follow competition and Local Rules.</div>
@@ -578,15 +583,15 @@ p{line-height:1.55}
   $('#startNow').onclick=()=>{const x=$('#liveMsg');x.innerHTML='<b>⚡ Live Caddie started without a saved plan.</b> Choose today’s course, tee, handicap and target and play.';x.classList.remove('hidden')};
 
   const route={
-    h5:['H5 · 🟢 ATTACK','3 points · A genuine scoring opportunity','This is one of the better places to look for a gain.','📊 Previous scoring','You average 2.6 pts here / on comparable holes.','🏌️ Shot pattern','Your normal tee shot leaves a comfortable approach.','🌬️ Conditions','Today’s wind is helping.','⚠️ Main danger','Trouble left — avoid it rather than chasing the flag.','Caddie’s plan','Play positively. Three points is realistic, but two is still perfectly acceptable.'],
+    h5:['H5 · 🟢 ATTACK','3 points · A genuine scoring opportunity','This is one of the better places to look for a gain.','📊 Previous scoring','You average 2.6 pts here / on comparable holes.','🏌️ Shot pattern','Your normal tee shot leaves a comfortable approach.','🌬️ Conditions','The selected day’s wind is helping.','⚠️ Main danger','Trouble left — avoid it rather than chasing the flag.','Caddie’s plan','Play positively. Three points is realistic, but two is still perfectly acceptable.'],
     h6:['H6 · ⚪ STEADY','2 points · Don’t give shots away','You do not need to manufacture a gain here.','📊 Historical average','About 1.9 pts.','🌬️ Conditions','Crosswind makes the approach less predictable.','🎯 Green pattern','Green success is lower than your normal level.','🏆 Route requirement','Par gives the two points required.','Caddie’s plan','Aim for the safe part of the green. Don’t turn a good two-point hole into one or zero chasing a difficult pin.'],
-    h7:['H7 · 🛡️ PROTECT','2 points · Bogey is on plan','One of today’s hardest holes — but your handicap shot changes what success means.','🔢 Handicap','Stroke Index 3 — you receive a shot.','📏 Difficulty','Long relative to your normal distances.','🌬️ Conditions','Playing into today’s wind.','📊 History','Historically one of your weaker holes.','Caddie’s plan','Keep the ball in play. Bogey earns two Stableford points. A bogey here is not a failure — it is the score the route asked for.'],
-    h8:['H8 · 🔥 CHANCE','3 points · A realistic place to gain','A better recovery opportunity than forcing unnecessary risk on H7.','🔢 Handicap','You receive a handicap shot.','📊 Previous scoring','Around 2.4 pts average.','💨 Conditions','The course changes direction and the wind is now helping.','🏌️ Approach','Effective yardage brings a comfortable club into play.','Caddie’s plan','Be positive. If you are behind route, this is a more sensible place to recover a point than the previous protect hole.']
+    h7:['H7 · 🛡️ PROTECT','2 points · Bogey is on plan','One of today’s hardest holes — but your handicap shot changes what success means.','🔢 Handicap','Stroke Index 3 — you receive a shot.','📏 Difficulty','Long relative to your normal distances.','🌬️ Conditions','Playing into the selected day’s wind.','📊 History','Historically one of your weaker holes.','Caddie’s plan','Keep the ball in play. Bogey earns two Stableford points. A bogey here is not a failure — it is the score the route asked for.'],
+    h8:['H8 · 🔥 CHANCE','3 points · A realistic place to gain','A better recovery opportunity than forcing unnecessary risk on H7.','🔢 Handicap','You receive a handicap shot.','📊 Previous scoring','Around 2.4 pts average.','💨 Conditions','The course changes direction and the selected day’s wind is now helping.','🏌️ Approach','Effective yardage brings a comfortable club into play.','Caddie’s plan','Be positive. If you are behind route, this is a more sensible place to recover a point than the previous protect hole.']
   };
   $$('.routeBtn').forEach(b=>b.onclick=()=>{active($$('.routeBtn'),b);const x=route[b.dataset.hole],d=$('#routeDetail');d.innerHTML='<div class="accent"><h3>'+x[0]+'</h3><b>'+x[1]+'</b><p class="small muted">'+x[2]+'</p><div class="evidence"><div><b>'+x[3]+'</b><br>'+x[4]+'</div><div><b>'+x[5]+'</b><br>'+x[6]+'</div><div><b>'+x[7]+'</b><br>'+x[8]+'</div><div><b>'+x[9]+'</b><br>'+x[10]+'</div></div><div class="callout"><b>'+x[11]+':</b> '+x[12]+'</div></div>';d.classList.add('open')});
 
   const wh={
-    6:['SE','💨 HELPING',148,'8i','This hole is playing largely with today’s wind, so the effective distance is reduced.'],
+    6:['SE','💨 HELPING',148,'8i','This hole is playing largely with the wind for the selected date, so the effective distance is reduced.'],
     7:['NW','🌬️ INTO',174,'6i','The course has turned back into the same wind. The headwind component makes the shot play longer.'],
     8:['NE','↔️ CROSSWIND',160,'7i','The same wind is now mainly across the hole. Its distance effect is smaller, but lateral movement matters more.']
   };
