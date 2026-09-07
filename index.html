@@ -214,6 +214,33 @@ p{line-height:1.55}
   .hero{padding:28px 20px}
   .section{padding:20px}
 }
+
+.appLaunch{
+  margin-top:16px;
+  background:linear-gradient(135deg,#136b4b,#1f8a61);
+  color:#fff;
+  border-radius:22px;
+  padding:20px;
+}
+.appLaunch .kicker{color:#dff5e9}
+.appLaunch p{color:#eef9f3}
+.appLaunch .launchBtn{
+  display:inline-flex;align-items:center;justify-content:center;
+  text-decoration:none;background:#fff;color:#136b4b;
+  border-radius:14px;padding:13px 18px;min-height:50px;
+  font-weight:950;margin-top:4px
+}
+.homeSteps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+.phoneGuide{border:1px solid var(--line);border-radius:20px;padding:18px;background:#fff}
+.stepRow{display:flex;gap:12px;align-items:flex-start;margin-top:13px}
+.stepNo{
+  flex:0 0 32px;width:32px;height:32px;border-radius:50%;
+  background:var(--greenSoft);color:var(--green);display:flex;
+  align-items:center;justify-content:center;font-weight:950
+}
+.stepText b{display:block;margin-bottom:2px}
+@media(max-width:760px){.homeSteps{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -241,6 +268,44 @@ p{line-height:1.55}
       <p class="muted">Follow the plan — or start fresh — and adapt as things change.</p>
     </div>
   </div>
+</section>
+
+<section class="section">
+  <div class="kicker">Ready to play?</div>
+  <h2>Open Den Society Golf.</h2>
+  <p class="muted">When you've seen how Plan My Round and Live Caddie work, go straight into the Den Society app.</p>
+  <div class="appLaunch">
+    <div class="kicker">DEN SOCIETY APP</div>
+    <h3 style="font-size:25px;margin-top:5px">Plan your round. Use Live Caddie. Review your golf.</h3>
+    <p class="small">Open the live Den Society website on your phone or computer.</p>
+    <a class="launchBtn" href="https://kevanojb.github.io/golf/den-society">🏌️ OPEN DEN SOCIETY APP →</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="kicker">Keep it on your phone</div>
+  <h2>Make Den Society feel like an app.</h2>
+  <p class="muted">You don't need to visit GitHub each time. Add the Den Society website to your Home Screen and open it like any other app.</p>
+
+  <div class="homeSteps">
+    <div class="phoneGuide">
+      <h3>🍎 iPhone / iPad</h3>
+      <div class="stepRow"><div class="stepNo">1</div><div class="stepText"><b>Open Den Society in Safari</b><span class="small muted">Use the green button above.</span></div></div>
+      <div class="stepRow"><div class="stepNo">2</div><div class="stepText"><b>Tap the Share button</b><span class="small muted">The square with the upward arrow.</span></div></div>
+      <div class="stepRow"><div class="stepNo">3</div><div class="stepText"><b>Choose “Add to Home Screen”</b><span class="small muted">You may need to scroll down the Share menu.</span></div></div>
+      <div class="stepRow"><div class="stepNo">4</div><div class="stepText"><b>Tap Add</b><span class="small muted">Den Society will now appear on your Home Screen.</span></div></div>
+    </div>
+
+    <div class="phoneGuide">
+      <h3>🤖 Android</h3>
+      <div class="stepRow"><div class="stepNo">1</div><div class="stepText"><b>Open Den Society in Chrome</b><span class="small muted">Use the green button above.</span></div></div>
+      <div class="stepRow"><div class="stepNo">2</div><div class="stepText"><b>Open the Chrome menu</b><span class="small muted">Tap the three-dot menu.</span></div></div>
+      <div class="stepRow"><div class="stepNo">3</div><div class="stepText"><b>Choose “Add to Home screen”</b><span class="small muted">On some phones this may say “Install app”.</span></div></div>
+      <div class="stepRow"><div class="stepNo">4</div><div class="stepText"><b>Confirm Add / Install</b><span class="small muted">The Den Society icon will then be available from your Home Screen.</span></div></div>
+    </div>
+  </div>
+
+  <div class="callout"><b>Tip:</b> Add the actual Den Society app page to your Home Screen — not this guide — so one tap takes you straight into your golf.</div>
 </section>
 
 <section class="section">
@@ -479,6 +544,14 @@ p{line-height:1.55}
       <div class="soft" style="margin-top:10px"><b>Use it next time</b><p class="small">Review what cost you last time and carry that evidence into your next Plan My Round.</p></div>
     </div>
   </div>
+</section>
+
+
+<section class="section" style="text-align:center">
+  <div class="kicker">Ready?</div>
+  <h2>Now put it into practice.</h2>
+  <p class="muted">Open Den Society, prepare your next round or start Live Caddie on game day.</p>
+  <a class="btn primary" style="display:inline-flex;text-decoration:none;align-items:center;justify-content:center;max-width:420px" href="https://kevanojb.github.io/golf/den-society">🏌️ OPEN DEN SOCIETY APP →</a>
 </section>
 
 <section class="footer">
